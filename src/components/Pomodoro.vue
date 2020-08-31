@@ -3,7 +3,7 @@
     <v-tabs @change="changeCurrentTimer" v-model="currentTimer" grow>
       <v-tab v-for="timer in timers" :key="timer.name">{{timer.name}}</v-tab>
     </v-tabs>
-    <v-card color="basil" class="pa-5 d-flex flex-column justify-center align-center" flat>
+    <v-card class="pa-5 d-flex flex-column justify-center align-center" flat>
       <h1 class="time">{{displayMinutes}}:{{displaySeconds}}</h1>
       <div class="button-group">
         <v-btn @click="start" color="primary">
@@ -12,7 +12,7 @@
         <v-btn @click="stop" color="error">
           <v-icon left small>mdi-stop-circle-outline</v-icon>Stop
         </v-btn>
-        <v-btn @click="reset" :disabled="isRunning">
+        <v-btn @click="reset(timers[currentTimer].minutes)" :disabled="isRunning">
           <v-icon left small>mdi-restart</v-icon>Reset
         </v-btn>
       </div>
@@ -57,6 +57,10 @@ export default {
       this.stop();
       this.isRunning = true;
       this.timerInstance = setInterval(() => {
+        if (this.totalSeconds <= 0) {
+          this.stop();
+          return;
+        }
         this.totalSeconds -= 1;
       }, 1000);
     },
@@ -64,12 +68,13 @@ export default {
       this.isRunning = false;
       clearInterval(this.timerInstance);
     },
-    reset() {
+    reset(minutes) {
       this.stop();
-      this.totalSeconds = 25 * 60;
+      this.totalSeconds = minutes * 60;
     },
     changeCurrentTimer(num) {
-      console.log(num);
+      this.currentTimer = num;
+      this.reset(this.timers[num].minutes);
     },
   },
 };
