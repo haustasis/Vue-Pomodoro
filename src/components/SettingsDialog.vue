@@ -39,6 +39,20 @@ export default {
       type: Function,
       required: true,
     },
+    timers: {
+      type: Array,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      updatedTimers: [],
+    };
+  },
+  mounted() {
+    this.updatedTimers = this.timers.map((timer) => {
+      return timer.minutes;
+    });
   },
 };
 </script>
