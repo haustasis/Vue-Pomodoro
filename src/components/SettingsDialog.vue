@@ -31,6 +31,14 @@ export default {
       type: Boolean,
       require: true,
     },
+    closeDialog: {
+      type: Function,
+      required: true,
+    },
+    save: {
+      type: Function,
+      required: true,
+    },
   },
 };
 </script>

@@ -17,11 +17,25 @@
         </v-btn>
       </div>
     </v-card>
+    <SettingsDialog :dialog="dialog" :closeDialog="closeDialog" :save="save" />
   </v-card>
 </template>
 
 <script>
+import SettingsDialog from "./SettingsDialog";
 export default {
+  components: { SettingsDialog },
+  props: {
+    dialog: {
+      type: Boolean,
+      required: true,
+    },
+    closeDialog: {
+      type: Function,
+      required: true,
+    },
+  },
+
   data() {
     return {
       isRunning: false,
